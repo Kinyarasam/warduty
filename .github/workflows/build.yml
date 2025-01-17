@@ -1,0 +1,40 @@
+name: Build and Compile
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install dependencies (e.g., CMake, GCC, or Clang)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      # Create the build directory
+      - name: Create build directory
+        run: mkdir build
+
+      # Configure the project
+      - name: Configure project
+        run: cmake -S . -B build
+
+      # Build the project
+      - name: Build project
+        run: cmake --build build
+
+      # Test the executable
+      - name: Run the executable (optional)
+        run: ./build/warduty
